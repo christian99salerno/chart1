@@ -30,10 +30,13 @@ io.on( 'connection', function (socket) {
   socket.on('start', function () {
     console.log('start');
     id = setInterval( function () {
-      const data = generateData(0, 100);
+      const data = generateData();
+      console.log('P0', P0);
+      console.log('data', data);
       socket.emit('data', {
         value: data
       });
+      t++;
     }, 1000);
   });
 
@@ -41,12 +44,22 @@ io.on( 'connection', function (socket) {
     console.log('stop');
     if (id) {
       clearInterval(id);
+      t = 0;
     }
+  });
+
+  socket.on('popIniz', function (data) {
+    P0 = data.p0;
   });
 } );
 
 http.listen(3000);
 
-function generateData (min, max) {
-  return Math.floor( min + Math.random() * (max-min) );
+let t = 0;
+let P0 = 100;
+let N = 10;
+let M = 10.1;
+
+function generateData () {
+  return P0 * Math.exp( (N-M) * t);
 }
