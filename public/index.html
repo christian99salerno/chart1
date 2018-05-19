@@ -12,20 +12,30 @@
   </head>
 
   <body>
-    <div class="container">
-      <h1>Charts</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2">
+          <h4>Lista grafici</h4>
+          <ul id="grafici">
+          </ul>
+        </div>
 
-      <button id="start">Start</button>
-      <button id="stop">Stop</button>
+        <div class="col-10">
+          <h1>Charts</h1>
 
-      <input type="text" id="P0">
-      <input type="text" id="N" value="0.1">
-      <input type="text" id="M" value="0.1">
-      <button id="Save">Save</button>
+          <button id="start">Start</button>
+          <button id="stop">Stop</button>
 
-      <canvas id="myChart" width="800px" height="600px"></canvas>
+          <input type="text" id="P0">
+          <input type="text" id="N" value="0.1">
+          <input type="text" id="M" value="0.1">
+          <button id="Save">Save</button>
 
-      <button id="delete">&times;</button>
+          <canvas id="myChart" width="800px" height="600px"></canvas>
+
+          <button id="delete">&times;</button>
+        </div>
+      </div>
     </div>
 
     <script
