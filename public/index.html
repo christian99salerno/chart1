@@ -17,8 +17,11 @@
 
       <button id="start">Start</button>
       <button id="stop">Stop</button>
-      <input type="text" id="p0">
-      <button id="popIniz">PopIniz+</button>
+
+      <input type="text" id="P0">
+      <input type="text" id="N" value="0.1">
+      <input type="text" id="M" value="0.1">
+      <button id="Save">Save</button>
 
       <canvas id="myChart" width="800px" height="600px"></canvas>
 
@@ -43,17 +46,23 @@
       var startBtn = $('#start');
       var stopBtn = $('#stop');
       var deleteBtn = $('#delete');
-      var popInizBtn = $('#popIniz');
-      var p0 = $('#p0');
+      var saveBtn = $('#Save');
+      var P0 = $('#P0');
+      var N = $('#N');
+      var M = $('#M');
 
       var values = [];
       var lbl = [];
       var counter = 1;
 
-      popInizBtn.on('click', function () {
-        var p0val = p0.val();
-        socket.emit('popIniz', {
-          p0: p0val
+      saveBtn.on('click', function () {
+        var P0val = P0.val();
+        var Nval = N.val();
+        var Mval = M.val();
+        socket.emit('dati', {
+          P0: P0val,
+          N: Nval,
+          M: Mval
         });
       });
 
@@ -72,6 +81,7 @@
 
       socket.on('data', function (data) {
         values.push(data.value);
+        P0.val(data.value);
         lbl.push(counter);
         counter++;
         console.log(values);

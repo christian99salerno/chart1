@@ -31,12 +31,11 @@ io.on( 'connection', function (socket) {
     console.log('start');
     id = setInterval( function () {
       const data = generateData();
-      console.log('P0', P0);
       console.log('data', data);
       socket.emit('data', {
         value: data
       });
-      t++;
+      t += 0.1;
     }, 1000);
   });
 
@@ -48,8 +47,11 @@ io.on( 'connection', function (socket) {
     }
   });
 
-  socket.on('popIniz', function (data) {
-    P0 = data.p0;
+  socket.on('dati', function (data) {
+    P0 = data.P0;
+    N = data.N;
+    M = data.M;
+    t = 0;
   });
 } );
 
@@ -57,9 +59,9 @@ http.listen(3000);
 
 let t = 0;
 let P0 = 100;
-let N = 10;
-let M = 10.1;
+let N = 0.1;
+let M = 0.1;
 
 function generateData () {
-  return P0 * Math.exp( (N-M) * t);
+  return P0 * Math.exp( (N-M) * t );
 }
