@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="/css/animate.css" style="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC" 
     rel="stylesheet">    
@@ -184,17 +186,29 @@ h1,h2{font-family: 'Amatic SC', cursive;}
         chart.update();
       });
 
+      socket.on('aggiornamento', function(dato) {
+      $('#grafici').find('li').attr('data-id', dato.id).remove();
+      
+      });
+
       //costruzione della lista dei grafici memorizzati nel database
       socket.on('grafici', function(grafici) {
         var listaGrafici = $('#grafici');
         grafici.forEach( function(grafico) {
-          listaGrafici.append($('<li>', { class:'btn-link list-group-item', style:'cursor:pointer', "data-id":grafico._id }).text(grafico.titolo))
+          var li = $('<li>', { class:'btn-link list-group-item', style:'cursor:pointer', "data-id":grafico._id });
+          li.append($('<span>').text(grafico.titolo));
+          li.append($('<button>', { class:'btn btn-outline-danger' }).html('&times;'));
+          listaGrafici.append(li)
         });
       });
 
         //richiesta al server di invio dati per la costruzione del grafico memorizzato selezionato
-        $('#grafici').on('click', "li", function(event) {
-        socket.emit('datiGrafico', $(this).data("id") );  
+        $('#grafici').on('click', "span", function(event) {
+        socket.emit('datiGrafico', $(this).closest('li').data("id") );  
+      });
+
+     $('#grafici').on('click', "button", function(event) {
+        socket.emit('cancellaGrafico', $(this).closest('li').data("id") );  
       });
 
       //arrivo nuovi data

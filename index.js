@@ -18,6 +18,8 @@ moongose.connect("mongodb://127.0.0.1:32768/simulations", function (err) {
 
 });
 
+app.use( '/css', express.static(path.resolve(__dirname, 'css') ) );
+
 app.use( '/', function (req, res) {
   res.sendFile( path.resolve(__dirname, 'public', 'index.html') );
 } );
@@ -52,6 +54,17 @@ io.on('connection', function (socket) {
   socket.on('save', function (dati) {
     var simulation = new Simulation(dati);
     simulation.save();
+  });
+
+  //cancellazione grafico
+  socket.on('cancellaGrafico', function (dato) {
+  Simulation.remove({ _id : dato.id }).exec( function (err) {
+    if(err){
+      console.log(err);
+    }
+    
+    socket.emit('aggiornamento', { id: dato.id });
+  });
   });
 
   //start on richiesta di invio dati al grafico
