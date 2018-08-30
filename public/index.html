@@ -1,3 +1,5 @@
+<!--Client-->
+
 <!doctype html>
 
 <html>
@@ -197,7 +199,7 @@ h1,h2{font-family: 'Amatic SC', cursive;}
         grafici.forEach( function(grafico) {
           var li = $('<li>', { class:'btn-link list-group-item', style:'cursor:pointer', "data-id":grafico._id });
           li.append($('<span>').text(grafico.titolo));
-          li.append($('<button>', { class:'btn btn-outline-danger' }).html('&times;'));
+          //li.append($('<button>', { class:'btn btn-outline-danger' }).html('&times;'));
           listaGrafici.append(li)
         });
       });
@@ -207,9 +209,9 @@ h1,h2{font-family: 'Amatic SC', cursive;}
         socket.emit('datiGrafico', $(this).closest('li').data("id") );  
       });
 
-     $('#grafici').on('click', "button", function(event) {
-        socket.emit('cancellaGrafico', $(this).closest('li').data("id") );  
-      });
+    // $('#grafici').on('click', "button", function(event) {
+    //    socket.emit('cancellaGrafico', $(this).closest('li').data("id") );  
+    //  });
 
       //arrivo nuovi data
       socket.on('data', function(data) {

@@ -1,3 +1,5 @@
+//Server
+
 const express = require('express');
 const path = require('path');
 const moongose = require('mongoose');
@@ -57,15 +59,15 @@ io.on('connection', function (socket) {
   });
 
   //cancellazione grafico
-  socket.on('cancellaGrafico', function (dato) {
-  Simulation.remove({ _id : dato.id }).exec( function (err) {
-    if(err){
-      console.log(err);
-    }
-    
-    socket.emit('aggiornamento', { id: dato.id });
-  });
-  });
+ // socket.on('cancellaGrafico', function (dato) {
+ // Simulation.remove({ _id : dato.id }).exec( function (err) {
+ //   if(err){
+ //     console.log(err);
+ //   }
+ //   
+ //   socket.emit('aggiornamento', { id: dato.id });
+ // });
+ // });
 
   //start on richiesta di invio dati al grafico
   socket.on('start', function () {
